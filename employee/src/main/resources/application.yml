@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: employee
+  datasource:
+    username: 'employee_management_admin'
+    password: 'password'
+    url: jdbc:mysql://localhost:3306/employee
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQLDialect
+          format_sql: 'true'
+      hibernate:
+        ddl-auto: update
+        show_sql: 'true'
+
+

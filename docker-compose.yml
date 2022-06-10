@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  mysql:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql
+    volumes:
+      - mysql:/data/mysql
+    environment:
+      MYSQL_USER: employee_management_admin
+      MYSQL_PASSWORD: password
+      PG_DATA: /data/mysql
+
+networks:
+  mysql:
+    driver: bridge
+
+volumes:
+  mysql:

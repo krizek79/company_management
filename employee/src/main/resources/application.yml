@@ -1,20 +1,17 @@
 server:
   port: 8080
-
 spring:
   application:
     name: employee
   datasource:
-    username: 'employee_management_admin'
-    password: 'password'
-    url: jdbc:mysql://localhost:3306/employee
+    password: password
+    url: jdbc:postgresql://localhost:5432/employee
+    username: employee_management_admin
     jpa:
       properties:
         hibernate:
-          dialect: org.hibernate.dialect.MySQLDialect
+          dialect: org.hibernate.dialect.PostgreSQLDialect
           format_sql: 'true'
       hibernate:
         ddl-auto: update
-        show_sql: 'true'
-
-
+        show-sql: 'true'

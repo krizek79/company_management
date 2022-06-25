@@ -1,4 +1,4 @@
-package com.krizan.employee;
+package com.krizan.employee.dto;
 
 public record EmployeeRegistrationRequest (
         String firstName,

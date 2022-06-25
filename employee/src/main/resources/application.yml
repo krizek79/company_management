@@ -5,8 +5,8 @@ spring:
     name: employee
   datasource:
     password: password
-    url: jdbc:postgresql://localhost:5432/employee
-    username: employee_management_admin
+    url: jdbc:postgresql://localhost:5432/company
+    username: company_management_admin
   jpa:
     hibernate:
       ddl-auto: update

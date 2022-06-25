@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.krizan</groupId>
-  <artifactId>employee_management_services</artifactId>
+  <artifactId>company_management_services</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
@@ -13,8 +13,8 @@
     <module>employee</module>
   </modules>
 
-  <name>employee_management_services</name>
-  <url>https://www.employeemanagement.com</url>
+  <name>company_management_services</name>
+  <url>https://www.companymanagement.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

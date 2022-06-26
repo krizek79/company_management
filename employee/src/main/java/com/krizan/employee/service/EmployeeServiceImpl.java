@@ -17,6 +17,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository) impleme
                 .lastName(request.lastName())
                 .email(request.email())
                 .phoneNumber(request.phoneNumber())
+                .address(request.address())
                 .build();
         return employeeRepository.save(employee);
     }
@@ -28,6 +29,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository) impleme
         employee.setLastName(request.lastName());
         employee.setEmail(request.email());
         employee.setPhoneNumber(request.phoneNumber());
+        employee.setAddress(request.address());
         return employeeRepository.save(employee);
     }
 

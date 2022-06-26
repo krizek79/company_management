@@ -1,4 +1,4 @@
-package com.krizan.employee.model;
+package com.krizan.company.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,22 +12,20 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee {
+public class Company {
 
     @Id
     @SequenceGenerator(
-            name = "employee_id_sequence",
-            sequenceName = "employee_id_sequence"
+            name = "company_id_sequence",
+            sequenceName = "company_id_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "employee_id_sequence"
+            generator = "company_id_sequence"
     )
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
+    private String name;
     @Embedded
     private Address address;
+    private Integer numberOfEmployees;
 }

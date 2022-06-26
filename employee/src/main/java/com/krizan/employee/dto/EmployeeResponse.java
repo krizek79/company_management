@@ -1,5 +1,6 @@
 package com.krizan.employee.dto;
 
+import com.krizan.employee.model.Address;
 import com.krizan.employee.model.Employee;
 import lombok.Getter;
 
@@ -11,6 +12,7 @@ public class EmployeeResponse {
     private final String lastName;
     private final String email;
     private final String phoneNumber;
+    private final Address address;
 
     public EmployeeResponse(Employee employee) {
         this.id = employee.getId();
@@ -18,5 +20,6 @@ public class EmployeeResponse {
         this.lastName = employee.getLastName();
         this.email = employee.getEmail();
         this.phoneNumber = employee.getPhoneNumber();
+        this.address = employee.getAddress();
     }
 }

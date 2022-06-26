@@ -5,15 +5,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.krizan</groupId>
-  <artifactId>company_management_services</artifactId>
+  <artifactId>company_management</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
   <modules>
     <module>employee</module>
+      <module>company</module>
   </modules>
 
-  <name>company_management_services</name>
+  <name>company_management</name>
   <url>https://www.companymanagement.com</url>
 
   <properties>

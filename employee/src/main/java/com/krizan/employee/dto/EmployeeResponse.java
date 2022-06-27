@@ -8,6 +8,7 @@ import lombok.Getter;
 public class EmployeeResponse {
 
     private final Long id;
+    private final Long companyId;
     private final String firstName;
     private final String lastName;
     private final String email;
@@ -16,6 +17,7 @@ public class EmployeeResponse {
 
     public EmployeeResponse(Employee employee) {
         this.id = employee.getId();
+        this.companyId = employee.getCompanyId();
         this.firstName = employee.getFirstName();
         this.lastName = employee.getLastName();
         this.email = employee.getEmail();

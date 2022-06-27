@@ -24,6 +24,7 @@ public class Employee {
             generator = "employee_id_sequence"
     )
     private Long id;
+    private Long companyId;
     private String firstName;
     private String lastName;
     private String email;

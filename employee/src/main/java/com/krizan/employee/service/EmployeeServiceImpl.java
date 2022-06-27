@@ -12,7 +12,9 @@ import java.util.List;
 @Service
 public record EmployeeServiceImpl(EmployeeRepository employeeRepository) implements EmployeeService {
     public Employee registerEmployee(EmployeeRegistrationRequest request) {
+        //  TODO: validate companyId
         Employee employee = Employee.builder()
+                .companyId(request.companyId())
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .email(request.email())

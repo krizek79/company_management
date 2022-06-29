@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/employee")
+@RequestMapping("api/employees")
 public record EmployeeController(EmployeeServiceImpl employeeService) {
 
     @PostMapping
@@ -32,6 +32,11 @@ public record EmployeeController(EmployeeServiceImpl employeeService) {
         employeeService.deleteEmployee(id);
     }
 
+    @DeleteMapping("/company/{id}")
+    public void deleteAllEmployeesByCompanyId(@PathVariable("id") Long id) {
+        employeeService.deleteAllEmployeesByCompanyId(id);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(new EmployeeResponse(employeeService.getEmployeeById(id)), HttpStatus.OK);
@@ -40,6 +45,14 @@ public record EmployeeController(EmployeeServiceImpl employeeService) {
     @GetMapping
     public List<EmployeeResponse> getAllEmployees() {
         return employeeService.getAllEmployees()
+                .stream()
+                .map(EmployeeResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/company/{id}")
+    public List<EmployeeResponse> getAllEmployeesByCompanyId(@PathVariable("id") Long id) {
+        return employeeService.getAllEmployeesByCompanyId(id)
                 .stream()
                 .map(EmployeeResponse::new)
                 .collect(Collectors.toList());

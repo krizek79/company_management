@@ -11,6 +11,8 @@ public interface EmployeeService {
     Employee registerEmployee(EmployeeRegistrationRequest request);
     Employee updateEmployee(Long id, EmployeeUpdateRequest request);
     void deleteEmployee(Long id);
+    void deleteAllEmployeesByCompanyId(Long id);
     Employee getEmployeeById(Long id);
     List<Employee> getAllEmployees();
+    List<Employee> getAllEmployeesByCompanyId(Long id);
 }

@@ -1,4 +1,4 @@
-package com.krizan.company.model;
+package com.krizan.company.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

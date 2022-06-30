@@ -1,4 +1,4 @@
-package com.krizan.employee.model;
+package com.krizan.employee.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

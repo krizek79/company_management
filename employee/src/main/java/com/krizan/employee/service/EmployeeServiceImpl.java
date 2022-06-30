@@ -5,6 +5,8 @@ import com.krizan.employee.dto.EmployeeUpdateRequest;
 import com.krizan.employee.exception.NotFoundException;
 import com.krizan.employee.model.Employee;
 import com.krizan.employee.repository.EmployeeRepository;
+import com.krizan.employee.vo.Amount;
+import com.krizan.employee.vo.Company;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +15,8 @@ import java.util.List;
 @Service
 public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTemplate restTemplate) implements EmployeeService {
     public Employee registerEmployee(EmployeeRegistrationRequest request) {
-        //  TODO: validate companyId
+        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + request.companyId(), Company.class);
+        if (company == null) throw new NotFoundException();
         Employee employee = Employee.builder()
                 .companyId(request.companyId())
                 .firstName(request.firstName())
@@ -22,6 +25,9 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
                 .phoneNumber(request.phoneNumber())
                 .address(request.address())
                 .build();
+        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + request.companyId(),
+                new Amount(1),
+                Amount.class);
         return employeeRepository.save(employee);
     }
 
@@ -39,12 +45,19 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     @Override
     public void deleteEmployee(Long id) {
         Employee employee = getEmployeeById(id);
+        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + id,
+                new Amount(-1),
+                Amount.class);
         employeeRepository.delete(employee);
     }
 
     @Override
     public void deleteAllEmployeesByCompanyId(Long id) {
-        //  TODO: validate companyId
+        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + id, Company.class);
+        if (company == null) throw new NotFoundException();
+        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + id,
+                new Amount(-company.getNumberOfEmployees()),
+                Amount.class);
         employeeRepository.deleteAllByCompanyId(id);
     }
 
@@ -62,7 +75,8 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
 
     @Override
     public List<Employee> getAllEmployeesByCompanyId(Long id) {
-        //  TODO: Validate companyId
+        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + id, Company.class);
+        if (company == null) throw new NotFoundException();
         return employeeRepository.findAllByCompanyId(id);
     }
 }

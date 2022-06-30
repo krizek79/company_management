@@ -1,6 +1,6 @@
 package com.krizan.employee.dto;
 
-import com.krizan.employee.model.Address;
+import com.krizan.employee.vo.Address;
 import com.krizan.employee.model.Employee;
 import lombok.Getter;
 

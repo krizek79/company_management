@@ -1,5 +1,6 @@
 package com.krizan.company.model;
 
+import com.krizan.company.vo.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

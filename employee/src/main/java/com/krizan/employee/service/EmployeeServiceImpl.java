@@ -25,7 +25,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
                 .phoneNumber(request.phoneNumber())
                 .address(request.address())
                 .build();
-        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + request.companyId(),
+        restTemplate.postForObject("http://localhost:9002/api/companies/" + request.companyId() + "/setNumberOfEmployees",
                 new Amount(1),
                 Amount.class);
         return employeeRepository.save(employee);
@@ -45,7 +45,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     @Override
     public void deleteEmployee(Long id) {
         Employee employee = getEmployeeById(id);
-        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + id,
+        restTemplate.postForObject("http://localhost:9002/api/companies/" + id + "/setNumberOfEmployees",
                 new Amount(-1),
                 Amount.class);
         employeeRepository.delete(employee);
@@ -55,7 +55,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     public void deleteAllEmployeesByCompanyId(Long id) {
         Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + id, Company.class);
         if (company == null) throw new NotFoundException();
-        restTemplate.postForObject("http://localhost:9002/api/companies/setNumberOfEmployees/" + id,
+        restTemplate.postForObject("http://localhost:9002/api/companies/" + id + "/setNumberOfEmployees",
                 new Amount(-company.getNumberOfEmployees()),
                 Amount.class);
         employeeRepository.deleteAllByCompanyId(id);

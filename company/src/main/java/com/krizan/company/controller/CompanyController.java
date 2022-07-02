@@ -19,7 +19,7 @@ public record CompanyController(CompanyService companyService) {
         return new ResponseEntity<>(new CompanyResponse(companyService.registerCompany(request)), HttpStatus.CREATED);
     }
 
-    @PostMapping("/setNumberOfEmployees/{id}")
+    @PostMapping("/{id}/setNumberOfEmployees")
     public void setNumberOfEmployees(@PathVariable("id") Long id, @RequestBody Amount request) {
         companyService.setNumberOfEmployees(id, request);
     }

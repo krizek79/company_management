@@ -11,7 +11,9 @@
 
   <modules>
     <module>employee</module>
-      <module>company</module>
+    <module>company</module>
+    <module>eureka_server</module>
+    <module>api_gateway</module>
   </modules>
 
   <name>company_management</name>
@@ -21,6 +23,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <spring-cloud.version>2021.0.3</spring-cloud.version>
   </properties>
 
   <dependencyManagement>
@@ -31,6 +34,13 @@
         <version>2.6.1</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -43,7 +43,7 @@ public record CompanyServiceImpl(CompanyRepository companyRepository, RestTempla
     @Override
     public void deleteCompany(Long id) {
         Company company = getCompanyById(id);
-        restTemplate.delete("http://localhost:9001/api/employees/company/" + id);
+        restTemplate.delete("http://EMPLOYEE-SERVICE/api/employees/company/" + id);
         companyRepository.delete(company);
     }
 
@@ -55,11 +55,11 @@ public record CompanyServiceImpl(CompanyRepository companyRepository, RestTempla
     }
 
     @Override
-    public CompanyWithEmployees getCompanyWithEmployeesById(Long id) {
+    public CompanyWithEmployees getCompanyWithDetails(Long id) {
         Company company = getCompanyById(id);
         CompanyWithEmployees companyWithEmployees = new CompanyWithEmployees();
         companyWithEmployees.setCompany(company);
-        Employee[] employees = restTemplate.getForObject("http://localhost:9001/api/employees/company/" + id,
+        Employee[] employees = restTemplate.getForObject("http://EMPLOYEE-SERVICE/api/employees/company/" + id,
                 Employee[].class);
         List<Employee> employeeList;
         if (employees != null) {

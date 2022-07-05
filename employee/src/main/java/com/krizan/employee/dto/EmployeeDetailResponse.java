@@ -5,7 +5,7 @@ import com.krizan.employee.model.Employee;
 import lombok.Getter;
 
 @Getter
-public class EmployeeResponse {
+public class EmployeeDetailResponse {
 
     private final Long id;
     private final Long companyId;
@@ -15,7 +15,7 @@ public class EmployeeResponse {
     private final String phoneNumber;
     private final Address address;
 
-    public EmployeeResponse(Employee employee) {
+    public EmployeeDetailResponse(Employee employee) {
         this.id = employee.getId();
         this.companyId = employee.getCompanyId();
         this.firstName = employee.getFirstName();

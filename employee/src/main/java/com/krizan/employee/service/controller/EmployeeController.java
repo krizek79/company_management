@@ -1,7 +1,8 @@
-package com.krizan.employee.controller;
+package com.krizan.employee.service.controller;
 
+import com.krizan.employee.dto.EmployeeDetailResponse;
 import com.krizan.employee.dto.EmployeeRegistrationRequest;
-import com.krizan.employee.dto.EmployeeResponse;
+import com.krizan.employee.dto.EmployeeSimpleResponse;
 import com.krizan.employee.dto.EmployeeUpdateRequest;
 import com.krizan.employee.service.EmployeeServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -16,15 +17,15 @@ import java.util.stream.Collectors;
 public record EmployeeController(EmployeeServiceImpl employeeService) {
 
     @PostMapping
-    public ResponseEntity<EmployeeResponse> registerEmployee(@RequestBody EmployeeRegistrationRequest request) {
-        return new ResponseEntity<>(new EmployeeResponse(employeeService.registerEmployee(request)), HttpStatus.CREATED);
+    public ResponseEntity<EmployeeDetailResponse> registerEmployee(@RequestBody EmployeeRegistrationRequest request) {
+        return new ResponseEntity<>(new EmployeeDetailResponse(employeeService.registerEmployee(request)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeResponse> updateEmployee(
+    public ResponseEntity<EmployeeDetailResponse> updateEmployee(
             @PathVariable("id") Long id,
             @RequestBody EmployeeUpdateRequest request) {
-        return new ResponseEntity<>(new EmployeeResponse(employeeService.updateEmployee(id, request)), HttpStatus.OK);
+        return new ResponseEntity<>(new EmployeeDetailResponse(employeeService.updateEmployee(id, request)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -38,23 +39,15 @@ public record EmployeeController(EmployeeServiceImpl employeeService) {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new EmployeeResponse(employeeService.getEmployeeById(id)), HttpStatus.OK);
-    }
-
-    @GetMapping
-    public List<EmployeeResponse> getAllEmployees() {
-        return employeeService.getAllEmployees()
-                .stream()
-                .map(EmployeeResponse::new)
-                .collect(Collectors.toList());
+    public ResponseEntity<EmployeeDetailResponse> getEmployeeById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(new EmployeeDetailResponse(employeeService.getEmployeeById(id)), HttpStatus.OK);
     }
 
     @GetMapping("/company/{id}")
-    public List<EmployeeResponse> getAllEmployeesByCompanyId(@PathVariable("id") Long id) {
+    public List<EmployeeSimpleResponse> getAllEmployeesByCompanyId(@PathVariable("id") Long id) {
         return employeeService.getAllEmployeesByCompanyId(id)
                 .stream()
-                .map(EmployeeResponse::new)
+                .map(EmployeeSimpleResponse::new)
                 .collect(Collectors.toList());
     }
 }

@@ -8,7 +8,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class CompanyWithEmployeesResponse {
+public class CompanyDetailResponse {
 
     private final Long id;
     private final String name;
@@ -16,7 +16,7 @@ public class CompanyWithEmployeesResponse {
     private final Integer numberOfEmployees;
     private final List<Employee> employees;
 
-    public CompanyWithEmployeesResponse(CompanyWithEmployees companyWithEmployees) {
+    public CompanyDetailResponse(CompanyWithEmployees companyWithEmployees) {
         this.id = companyWithEmployees.getCompany().getId();
         this.name = companyWithEmployees.getCompany().getName();
         this.address = companyWithEmployees.getCompany().getAddress();

@@ -5,14 +5,14 @@ import com.krizan.company.model.Company;
 import lombok.Getter;
 
 @Getter
-public class CompanyResponse {
+public class CompanyBasicResponse {
 
     private final Long id;
     private final String name;
     private final Address address;
     private final Integer numberOfEmployees;
 
-    public CompanyResponse(Company company) {
+    public CompanyBasicResponse(Company company) {
         this.id = company.getId();
         this.name = company.getName();
         this.address = company.getAddress();

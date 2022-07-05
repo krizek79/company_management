@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public record CompanyController(CompanyService companyService) {
 
     @PostMapping
-    public ResponseEntity<CompanyResponse> registerCompany(@RequestBody CompanyRegisterRequest request) {
-        return new ResponseEntity<>(new CompanyResponse(companyService.registerCompany(request)), HttpStatus.CREATED);
+    public ResponseEntity<CompanyBasicResponse> registerCompany(@RequestBody CompanyRegisterRequest request) {
+        return new ResponseEntity<>(new CompanyBasicResponse(companyService.registerCompany(request)), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/setNumberOfEmployees")
@@ -25,8 +25,8 @@ public record CompanyController(CompanyService companyService) {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(@PathVariable("id") Long id, @RequestBody CompanyUpdateRequest request) {
-        return new ResponseEntity<>(new CompanyResponse(companyService.updateCompany(id, request)), HttpStatus.OK);
+    public ResponseEntity<CompanyBasicResponse> updateCompany(@PathVariable("id") Long id, @RequestBody CompanyUpdateRequest request) {
+        return new ResponseEntity<>(new CompanyBasicResponse(companyService.updateCompany(id, request)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -35,21 +35,21 @@ public record CompanyController(CompanyService companyService) {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompanyById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new CompanyResponse(companyService.getCompanyById(id)), HttpStatus.OK);
+    public ResponseEntity<CompanyBasicResponse> getCompanyById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(new CompanyBasicResponse(companyService.getCompanyById(id)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/employees")
-    public ResponseEntity<CompanyWithEmployeesResponse> getCompanyWithEmployeesById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(new CompanyWithEmployeesResponse(companyService.getCompanyWithEmployeesById(id)),
+    public ResponseEntity<CompanyDetailResponse> getCompanyDetails(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(new CompanyDetailResponse(companyService.getCompanyWithDetails(id)),
                 HttpStatus.OK);
     }
 
     @GetMapping
-    public List<CompanyResponse> getAllCompanies() {
+    public List<CompanySimpleResponse> getAllCompanies() {
         return companyService.getAllCompanies()
                 .stream()
-                .map(CompanyResponse::new)
+                .map(CompanySimpleResponse::new)
                 .collect(Collectors.toList());
     }
 }

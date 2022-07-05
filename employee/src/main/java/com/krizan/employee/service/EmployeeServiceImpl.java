@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTemplate restTemplate) implements EmployeeService {
     public Employee registerEmployee(EmployeeRegistrationRequest request) {
-        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + request.companyId(), Company.class);
+        Company company = restTemplate.getForObject("http://COMPANY-SERVICE/api/companies/" + request.companyId(), Company.class);
         if (company == null) throw new NotFoundException();
         Employee employee = Employee.builder()
                 .companyId(request.companyId())
@@ -25,7 +25,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
                 .phoneNumber(request.phoneNumber())
                 .address(request.address())
                 .build();
-        restTemplate.postForObject("http://localhost:9002/api/companies/" + request.companyId() + "/setNumberOfEmployees",
+        restTemplate.postForObject("http://COMPANY-SERVICE/api/companies/" + request.companyId() + "/setNumberOfEmployees",
                 new Amount(1),
                 Amount.class);
         return employeeRepository.save(employee);
@@ -46,7 +46,7 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     public void deleteEmployee(Long id) {
         Employee employee = getEmployeeById(id);
         restTemplate.postForObject(
-                "http://localhost:9002/api/companies/" + employee.getCompanyId() + "/setNumberOfEmployees",
+                "http://COMPANY-SERVICE/api/companies/" + employee.getCompanyId() + "/setNumberOfEmployees",
                 new Amount(-1),
                 Amount.class
         );
@@ -55,9 +55,9 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
 
     @Override
     public void deleteAllEmployeesByCompanyId(Long id) {
-        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + id, Company.class);
+        Company company = restTemplate.getForObject("http://COMPANY-SERVICE/api/companies/" + id, Company.class);
         if (company == null) throw new NotFoundException();
-        restTemplate.postForObject("http://localhost:9002/api/companies/" + id + "/setNumberOfEmployees",
+        restTemplate.postForObject("http://COMPANY-SERVICE/api/companies/" + id + "/setNumberOfEmployees",
                 new Amount(-company.getNumberOfEmployees()),
                 Amount.class);
         employeeRepository.deleteAllByCompanyId(id);
@@ -71,13 +71,8 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
     public List<Employee> getAllEmployeesByCompanyId(Long id) {
-        Company company = restTemplate.getForObject("http://localhost:9002/api/companies/" + id, Company.class);
+        Company company = restTemplate.getForObject("http://COMPANY-SERVICE/api/companies/" + id, Company.class);
         if (company == null) throw new NotFoundException();
         return employeeRepository.findAllByCompanyId(id);
     }

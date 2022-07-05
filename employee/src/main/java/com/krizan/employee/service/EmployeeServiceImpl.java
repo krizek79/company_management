@@ -45,9 +45,11 @@ public record EmployeeServiceImpl(EmployeeRepository employeeRepository, RestTem
     @Override
     public void deleteEmployee(Long id) {
         Employee employee = getEmployeeById(id);
-        restTemplate.postForObject("http://localhost:9002/api/companies/" + id + "/setNumberOfEmployees",
+        restTemplate.postForObject(
+                "http://localhost:9002/api/companies/" + employee.getCompanyId() + "/setNumberOfEmployees",
                 new Amount(-1),
-                Amount.class);
+                Amount.class
+        );
         employeeRepository.delete(employee);
     }
 

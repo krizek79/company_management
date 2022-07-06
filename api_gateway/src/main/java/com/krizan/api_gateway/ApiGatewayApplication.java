@@ -1,4 +1,4 @@
-package com.krizan.cloud_gateway;
+package com.krizan.api_gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

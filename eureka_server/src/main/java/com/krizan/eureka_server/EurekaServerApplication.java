@@ -1,4 +1,4 @@
-package com.krizan.service_registry;
+package com.krizan.eureka_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

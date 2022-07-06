@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: CLOUD-GATEWAY
+    name: API-GATEWAY
   cloud:
     gateway:
       routes:
@@ -15,6 +15,10 @@ spring:
           uri: lb://EMPLOYEE-SERVICE
           predicates:
             - Path=/api/employees/**
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
 
 eureka:
   client:

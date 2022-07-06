@@ -14,6 +14,7 @@
     <module>company</module>
     <module>eureka_server</module>
     <module>api_gateway</module>
+      <module>user</module>
   </modules>
 
   <name>company_management</name>

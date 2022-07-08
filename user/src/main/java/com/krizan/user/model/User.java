@@ -24,4 +24,10 @@ public class User {
             generator = "user_id_sequence"
     )
     private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String role;
+    private Boolean enabled = false;
 }

@@ -1,64 +1,44 @@
 package com.krizan.user.service;
 
-import com.krizan.user.dto.UserRegistrationRequest;
+import com.krizan.user.exception.IllegalOperationException;
+import com.krizan.user.exception.NotFoundException;
+import com.krizan.user.model.ConfirmationToken;
 import com.krizan.user.model.User;
-import com.krizan.user.model.VerificationToken;
 import com.krizan.user.repository.UserRepository;
-import com.krizan.user.repository.VerificationTokenRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
-import java.util.UUID;
 
 @Service
 public record UserServiceImpl(
         UserRepository userRepository,
-        VerificationTokenRepository verificationTokenRepository,
-        PasswordEncoder passwordEncoder
-) implements UserService {
-    @Override
-    public User registerUser(UserRegistrationRequest request) {
-        User user = User.builder()
-                .firstName(request.firstName())
-                .lastName(request.lastName())
-                .email(request.email())
-                .role("USER")
-                .password(passwordEncoder().encode(request.password()))
-                .build();
-        return userRepository.save(user);
-    }
+        BCryptPasswordEncoder bCryptPasswordEncoder,
+        ConfirmationTokenService confirmationTokenService) implements UserService {
 
     @Override
-    public void saveVerificationTokenForUser(String token, User user) {
-        VerificationToken verificationToken = new VerificationToken(user, token);
-        verificationTokenRepository.save(verificationToken);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(NotFoundException::new);
     }
 
-    @Override
-    public String validateVerificationToken(String token) {
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
-        if (verificationToken == null) {
-            //  TODO: throw exception
-            return "invalid";
-        }
-        User user = verificationToken.getUser();
-        Calendar calendar = Calendar.getInstance();
-        if ((verificationToken.getExpirationTime().getTime() - calendar.getTime().getTime()) <= 0) {
-            verificationTokenRepository.delete(verificationToken);
-            //  TODO: throw exception
-            return "expired";
-        }
-        user.setEnabled(true);
+    public String signUpUser(User user) {
+        boolean emailTaken = userRepository.findByEmail(user.getEmail()).isPresent();
+        boolean nicknameTaken = userRepository.findByUserName(user.getUsername()).isPresent();
+        if (emailTaken || nicknameTaken) throw new IllegalOperationException("Username or email is already taken.");
+
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         userRepository.save(user);
-        return "valid";
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        //  TODO: send email
+
+        return confirmationToken.getToken();
     }
 
-    @Override
-    public VerificationToken generateNewVerificationToken(String oldToken) {
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(oldToken);
-        verificationToken.setToken(UUID.randomUUID().toString());
-        verificationTokenRepository.save(verificationToken);
-        return verificationToken;
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
     }
 }

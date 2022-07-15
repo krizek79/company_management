@@ -1,15 +1,14 @@
 package com.krizan.user.service;
 
-import com.krizan.user.dto.UserRegistrationRequest;
 import com.krizan.user.model.User;
-import com.krizan.user.model.VerificationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public interface UserService {
-    User registerUser(UserRegistrationRequest request);
+public interface UserService extends UserDetailsService {
 
-    void saveVerificationTokenForUser(String token, User user);
-
-    String validateVerificationToken(String token);
-
-    VerificationToken generateNewVerificationToken(String oldToken);
+    @Override
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    String signUpUser(User user);
+    int enableUser(String email);
 }

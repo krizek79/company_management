@@ -1,8 +1,8 @@
 package com.krizan.user.dto;
 
 public record UserRegistrationRequest(
-        String firstName,
-        String lastName,
+        String userName,
         String email,
-        String password) {
+        String password,
+        String repeatPassword) {
 }

@@ -18,7 +18,11 @@ spring:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/users/**
+            - Path=/api/registration/**
+        - id: EMAIL-SERVICE
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/api/email/**
 
 eureka:
   client:

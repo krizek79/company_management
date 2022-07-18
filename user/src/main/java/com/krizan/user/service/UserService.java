@@ -10,5 +10,5 @@ public interface UserService extends UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     String signUpUser(User user);
-    int enableUser(String email);
+    void enableUser(String email);
 }

@@ -36,7 +36,7 @@ public class ConfirmationToken {
     public ConfirmationToken(User user) {
         this.token = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
-        this.expiresAt = LocalDateTime.now().plusMinutes(10);
+        this.expiresAt = LocalDateTime.now().plusMinutes(15);
         this.user = user;
     }
 }

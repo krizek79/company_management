@@ -1,4 +1,4 @@
-package com.krizan.employee.service.controller;
+package com.krizan.employee.controller;
 
 import com.krizan.employee.dto.EmployeeDetailResponse;
 import com.krizan.employee.dto.EmployeeRegistrationRequest;

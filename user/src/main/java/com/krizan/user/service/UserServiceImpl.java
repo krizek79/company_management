@@ -38,7 +38,7 @@ public record UserServiceImpl(
         return confirmationToken.getToken();
     }
 
-    public int enableUser(String email) {
-        return userRepository.enableUser(email);
+    public void enableUser(String email) {
+        userRepository.enableUser(email);
     }
 }

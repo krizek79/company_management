@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 @Slf4j
 public class EmailServiceImpl implements EmailService {
+
     private final JavaMailSender mailSender;
 
     @Override

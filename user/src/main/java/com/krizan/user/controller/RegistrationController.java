@@ -13,7 +13,7 @@ public record RegistrationController(RegistrationService registrationService) {
         return registrationService.registerUser(request);
     }
 
-    @GetMapping
+    @GetMapping("/confirm")
     public String confirm(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }

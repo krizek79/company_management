@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: EMAIL-SERVICE
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: devemailservice302@gmail.com
+    password: elmveqxbqqdnzizi
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
 
 eureka:
   client:

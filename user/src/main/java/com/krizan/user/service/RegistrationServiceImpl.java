@@ -7,15 +7,20 @@ import com.krizan.user.exception.NotFoundException;
 import com.krizan.user.model.ConfirmationToken;
 import com.krizan.user.model.User;
 import com.krizan.user.vo.UserRole;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 
 @Service
-public record RegistrationServiceImpl(UserService userService,
-                                      ConfirmationTokenService confirmationTokenService,
-                                      RestTemplate restTemplate) implements RegistrationService{
+@AllArgsConstructor
+public class RegistrationServiceImpl implements RegistrationService {
+
+    private final UserService userService;
+    private final ConfirmationTokenService confirmationTokenService;
+    private final RestTemplate restTemplate;
+
     @Override
     public String registerUser(UserRegistrationRequest request) {
         Boolean isEmailValid = restTemplate.postForObject(
@@ -37,7 +42,7 @@ public record RegistrationServiceImpl(UserService userService,
                 .build();
 
         String token = userService.signUpUser(user);
-        String confirmationLink = "http://USER-SERVICE/api/users/confirm?token=" + token;
+        String confirmationLink = "http://localhost:9191/api/registration/confirm?token=" + token;
         EmailRequest emailRequest = new EmailRequest(request.email(), buildEmail(request.userName(), confirmationLink));
 
         restTemplate.postForObject(

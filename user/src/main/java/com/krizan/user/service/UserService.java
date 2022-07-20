@@ -11,4 +11,5 @@ public interface UserService extends UserDetailsService {
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     String signUpUser(User user);
     void enableUser(String email);
+    User getUserById(Long id);
 }

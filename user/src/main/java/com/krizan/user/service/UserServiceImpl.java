@@ -33,12 +33,15 @@ public record UserServiceImpl(
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        //  TODO: send email
-
         return confirmationToken.getToken();
     }
 
     public void enableUser(String email) {
         userRepository.enableUser(email);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 }

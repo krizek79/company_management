@@ -15,10 +15,6 @@ spring:
           uri: lb://EMPLOYEE-SERVICE
           predicates:
             - Path=/api/employees/**
-        - id: USER-SERVICE
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/registration/**
         - id: EMAIL-SERVICE
           uri: lb://EMAIL-SERVICE
           predicates:

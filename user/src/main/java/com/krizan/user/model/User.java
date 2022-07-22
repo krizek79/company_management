@@ -1,4 +1,4 @@
-package com.krizan.api_gateway.model;
+package com.krizan.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,21 +7,24 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Entity
 public class User {
 
     @Id
     @SequenceGenerator(
-            name = "user_id_sequence",
-            sequenceName = "user_id_sequence"
+            name = "employee_id_sequence",
+            sequenceName = "employee_id_sequence"
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_id_sequence"
+            generator = "employee_id_sequence"
     )
     private Long id;
+    private String username;
+    private String email;
+    private String password;
 }
